@@ -1,6 +1,8 @@
 import logging
+
 import ckan.plugins as p
 import ckan.plugins.toolkit as tk
+import validators
 
 def create_ruian_types():
     user = tk.get_action('get_site_user')({'ignore_auth': True}, {})
@@ -50,8 +52,10 @@ class ODCZDatasetFormPlugin(p.SingletonPlugin, tk.DefaultDatasetForm):
             'theme': [tk.get_validator('ignore_missing'),
                             tk.get_converter('convert_to_extras')],
             'temporal_start': [tk.get_validator('ignore_missing'),
+                               validators.xsd_date,
                             tk.get_converter('convert_to_extras')],
             'temporal_end': [tk.get_validator('ignore_missing'),
+                             validators.xsd_date,
                             tk.get_converter('convert_to_extras')],
             'schema': [tk.get_validator('ignore_missing'),
                             tk.get_converter('convert_to_extras')],
@@ -64,8 +68,10 @@ class ODCZDatasetFormPlugin(p.SingletonPlugin, tk.DefaultDatasetForm):
             'license_link' : [ tk.get_validator('ignore_missing') ],
             'describedBy' : [ tk.get_validator('ignore_missing') ],
             'describedByType' : [ tk.get_validator('ignore_missing') ],
-            'temporal_start' : [ tk.get_validator('ignore_missing') ],
-            'temporal_end' : [ tk.get_validator('ignore_missing') ],
+            'temporal_start' : [ tk.get_validator('ignore_missing'),
+                                 validators.xsd_date],
+            'temporal_end' : [ tk.get_validator('ignore_missing'),
+                               validators.xsd_date],
             'spatial_uri' : [ tk.get_validator('ignore_missing') ],
             'ruian_type' : [ tk.get_validator('ignore_missing') ],
             'ruian_code' : [ tk.get_validator('ignore_missing') ]
